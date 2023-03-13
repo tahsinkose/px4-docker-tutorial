@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="tf_prefix" default="$(optenv ROS_NAMESPACE)"/>
+  <param name="tf_prefix" type="string" value="$(arg tf_prefix)" />
+
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" value="0.05"/>
+  <arg name="R" default="0.0"/>
+  <arg name="P" default="0.0"/>
+  <arg name="Y" default="0.0"/>
+  <arg name="ID" default="0"/>
+  <!-- vehicle model and config -->
+  <arg name="est" default="ekf2"/>
+  <arg name="vehicle" default="iris"/>
+  <env name="PX4_SIM_MODEL" value="gazebo-classic_$(arg vehicle)" />
+  <env name="PX4_ESTIMATOR" value="$(arg est)" />
+  <!-- PX4 parameters -->
+  <arg name="fcu_url" default="udp://:14540@localhost:14580"/>
+  <arg name="mavlink_udp_port" default="14560"/>
+  <arg name="mavlink_tcp_port" default="4560"/>
+  <arg name="gst_udp_port" default="5600"/>
+  <arg name="video_uri" default="5600"/>
+  <arg name="mavlink_cam_udp_port" default="14530"/>
+  <arg name="mavlink_id" value="$(eval 1 + arg('ID'))" />
+
+  <arg name="gen_model_cmd"
+    default="$(find mavlink_sitl_gazebo)/scripts/jinja_gen.py --stdout --mavlink_id=$(arg mavlink_id) --mavlink_udp_port=$(arg mavlink_udp_port)
+              --mavlink_tcp_port=$(arg mavlink_tcp_port) --gst_udp_port=$(arg gst_udp_port) --video_uri=$(arg video_uri)
+              --mavlink_cam_udp_port=$(arg mavlink_cam_udp_port)
+              $(find mavlink_sitl_gazebo)/models/$(arg vehicle)/$(arg vehicle).sdf.jinja $(find mavlink_sitl_gazebo)"/>
+
+  <param command="$(arg gen_model_cmd)" name="sdf_$(arg vehicle)$(arg ID)"/>
+
+  <arg name="world_frame" value="map"/>
+
+
+  <!--node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+	  respawn="true" output="screen">
+    <param name="publish_frequency" type="double" value="20.0" />
+  </node-->
+
+  <include file="$(find mavros)/launch/px4.launch">
+    <!-- GCS link is provided by SITL -->
+    <arg name="gcs_url" value=""/>
+    <arg name="fcu_url" value="$(arg fcu_url)"/>
+    <arg name="tgt_system" value="$(arg mavlink_id)"/>
+    <arg name="tgt_component" value="1"/>
+  </include>
+
+  <node name="ground_truth_to_tf" pkg="message_to_tf" type="message_to_tf" output="screen">
+      <param name="odometry_topic" value="mavros/local_position/odom" />
+      <param name="frame_id" value="$(arg world_frame)" />
+      <param name="tf_prefix" value="$(arg tf_prefix)"/>
+      <remap from="ground_truth_to_tf/pose" to="pose"/>
+  </node>
+  <!-- gazebo model -->
+  <node name="$(anon vehicle_spawn)" pkg="gazebo_ros" type="spawn_model" output="screen"
+    args="-sdf -param sdf_$(arg vehicle)$(arg ID) -model $(arg vehicle)$(arg ID) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
+  <node pkg="tf" type="static_transform_publisher" name="map_publisher"
+    args="$(arg x) $(arg y) $(arg z) 0 0 0 earth $(arg tf_prefix)/map 100" />
+  <rosparam file = "$(find px4_tutorial_pkg)/cfg/px4_config.yaml" subst_value="True"/>
+</launch>

@@ -1,0 +1,13 @@
+<package format="2">
+  <name>px4_tutorial_pkg</name>
+  <version>0.0.1</version>
+  <description>px4_tutorial_pkg</description>
+  <maintainer email="tahsincankose@gmail.com">tahsinkose</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>gazebo_ros</depend>
+  <exec_depend>gazebo</exec_depend>
+</package>

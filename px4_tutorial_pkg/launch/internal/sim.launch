@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- gazebo configs -->
+  <arg name="debug" default="false"/>
+  <arg name="verbose" default="true"/>
+  <arg name="paused" default="true"/>
+  <arg name="world" default="$(find px4_tutorial_pkg)/worlds/empty.world"/>
+  <!-- Gazebo sim -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="gui" value="true"/>
+      <arg name="world_name" value="$(arg world)"/>
+      <arg name="debug" value="$(arg debug)"/>
+      <arg name="verbose" value="$(arg verbose)"/>
+      <arg name="paused" value="$(arg paused)"/>
+      <arg name="respawn_gazebo" value="false"/>
+      <arg name="output" value="screen"/>
+  </include>
+  <include file="$(find px4_tutorial_pkg)/launch/internal/rviz.launch"/>
+</launch>

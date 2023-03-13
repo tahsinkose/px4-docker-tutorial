@@ -1,0 +1,5 @@
+mavros:
+  local_position:
+    frame_id: $(arg tf_prefix)/map
+    tf:
+      send: true

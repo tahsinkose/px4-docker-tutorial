@@ -9,7 +9,7 @@ ENV NVIDIA_DRIVER_CAPABILITIES \
 
 RUN apt-get update && apt-get install -y mesa-utils
 # Install ros-dependencies
-RUN apt-get install ros-noetic-message-to-tf python3-catkin-pkg -y
+RUN apt-get install ros-noetic-message-to-tf ros-noetic-rviz ros-noetic-robot-state-publisher python3-catkin-pkg -y
 
 ENV TERM xterm-256color
 ARG USER=docker
