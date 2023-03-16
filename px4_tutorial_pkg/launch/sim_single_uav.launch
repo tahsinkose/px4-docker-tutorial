@@ -4,7 +4,7 @@
   <group ns="uav1">
     <include file="$(find px4_tutorial_pkg)/launch/internal/bringup.launch">
       <arg name="tf_prefix" value="uav1" />
-      <arg name="x" value="10.0" />
+      <arg name="x" value="1.0" />
       <arg name="y" value="0.0" />
       <arg name="Y" value="1.57" />
     </include>
