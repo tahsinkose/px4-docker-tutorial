@@ -7,7 +7,7 @@ export ROS_TEST_RESULTS_DIR="$(pwd)/test_results"
 export ROS_LOG_DIR="$(pwd)/ros_logs"
 # PX4 stuff
 HOME_DIR=$(pwd)
-SRC_DIR=/px4_docker_tutorial/PX4-Autopilot
+SRC_DIR=/px4-docker-tutorial/PX4-Autopilot
 PX4_GAZEBO_BUILD_DIR=$SRC_DIR/Tools/simulation/gazebo-classic/sitl_gazebo-classic/build
 
 # setup Gazebo env and update package path
