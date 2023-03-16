@@ -13,6 +13,6 @@ docker run -it --privileged \
     -p 14556:14556/udp \
     --gpus all \
     --workdir=/px4-docker-tutorial/PX4-Autopilot \
-    --name=px4-noetic-container px4-noetic bash
+    --name=px4-melodic-container px4-melodic bash
 
 xhost -

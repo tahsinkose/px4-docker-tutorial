@@ -1,5 +1,5 @@
-FROM nvidia/cudagl:11.4.2-devel-ubuntu20.04
-FROM px4io/px4-dev-ros-noetic:latest
+FROM nvidia/cudagl:11.4.2-devel-ubuntu18.04
+FROM px4io/px4-dev-ros-melodic:latest
 
 # nvidia-docker hooks
 ENV NVIDIA_VISIBLE_DEVICES \
@@ -9,7 +9,7 @@ ENV NVIDIA_DRIVER_CAPABILITIES \
 
 RUN apt-get update && apt-get install -y mesa-utils
 # Install ros-dependencies
-RUN apt-get install ros-noetic-message-to-tf ros-noetic-rviz ros-noetic-robot-state-publisher python3-catkin-pkg -y
+RUN apt-get install ros-melodic-message-to-tf ros-melodic-rviz ros-melodic-robot-state-publisher python3-catkin-pkg -y
 
 ENV TERM xterm-256color
 ARG USER=docker
