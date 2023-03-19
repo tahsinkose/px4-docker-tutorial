@@ -12,6 +12,7 @@ This tutorial aspires to provide an isolated workspace for PX4 application devel
 ### PX4 Source Build
 * After confirming above, run `make px4_sitl` command.
 * Go into `/px4-docker-tutorial/PX4-Autopilot/Tools/sitl_gazebo`.
+* Do `git checkout bd941689b6e9d3e628a1e786d1d042d48005dc7b`. This is required as the current SITL-gazebo bump fails compilation.
 * Do the following to compile PX4 Gazebo plugins:
 ```
 mkdir build
@@ -31,6 +32,11 @@ source devel/setup.bash # This needs to be done in each new terminal.
 
 ### Running Simulation
 `roslaunch px4_tutorial_pkg sim_single_uav.launch`
+
+### QGroundControl connection
+This is unfortunately not straightforward at the moment and requires inspection of two parameters:
+1. We need to figure out the UDP port of quadcopter. It can be found in `/px4-docker-tutorial/PX4-Autopilot/build/px4_sitl_default/etc/init.d-posix/px4-rc.mavlink` on the parameter `udp_gcs_port_local`.
+2. The IP address of the container we just created -> `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'  px4-noetic-container`
 
 ### Note
 
