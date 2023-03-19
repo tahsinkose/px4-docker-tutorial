@@ -36,7 +36,7 @@ source devel/setup.bash # This needs to be done in each new terminal.
 ### QGroundControl connection
 This is unfortunately not straightforward at the moment and requires inspection of two parameters:
 1. We need to figure out the UDP port of quadcopter. It can be found in `/px4-docker-tutorial/PX4-Autopilot/build/px4_sitl_default/etc/init.d-posix/px4-rc.mavlink` on the parameter `udp_gcs_port_local`.
-2. The IP address of the container we just created -> `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'  px4-noetic-container`
+2. The IP address of the container we just created -> `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'  px4-melodic-container`
 
 ### Note
 
