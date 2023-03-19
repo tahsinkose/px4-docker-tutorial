@@ -14,7 +14,7 @@
   <!-- vehicle model and config -->
   <arg name="est" default="ekf2"/>
   <arg name="vehicle" default="iris"/>
-  <env name="PX4_SIM_MODEL" value="gazebo-classic_$(arg vehicle)" />
+  <env name="PX4_SIM_MODEL" value="$(arg vehicle)" />
   <env name="PX4_ESTIMATOR" value="$(arg est)" />
   <!-- PX4 parameters -->
   <arg name="fcu_url" default="udp://:14540@localhost:14580"/>
@@ -48,6 +48,11 @@
     <arg name="tgt_system" value="$(arg mavlink_id)"/>
     <arg name="tgt_component" value="1"/>
   </include>
+
+  <!-- Load PX4 -->
+  <node name="sitl" pkg="px4" type="px4" output="screen"
+      args="$(find px4)/ROMFS/px4fmu_common -s etc/init.d-posix/rcS -i $(arg ID)
+      -w sitl_$(arg vehicle)_$(arg ID) -d" required="true"/>
 
   <node name="ground_truth_to_tf" pkg="message_to_tf" type="message_to_tf" output="screen">
       <param name="odometry_topic" value="mavros/local_position/odom" />

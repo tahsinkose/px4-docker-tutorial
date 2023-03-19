@@ -11,7 +11,7 @@ This tutorial aspires to provide an isolated workspace for PX4 application devel
 
 ### PX4 Source Build
 * After confirming above, run `make px4_sitl` command.
-* Go into `/px4-docker-tutorial/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic`.
+* Go into `/px4-docker-tutorial/PX4-Autopilot/Tools/sitl_gazebo`.
 * Do the following to compile PX4 Gazebo plugins:
 ```
 mkdir build
@@ -34,4 +34,4 @@ source devel/setup.bash # This needs to be done in each new terminal.
 
 ### Note
 
-Note that this repository bumps a particular commit of `PX4-Autopilot` as its submodule. In order to track particular branches/tags/releases the corresponding options should be specified in `.gitmodules`.
+Note that this repository bumps `PX4-Autopilot` to v1.13 release. In order to use a newer version of it, you need to checkout and bump accordingly.
