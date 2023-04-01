@@ -1,12 +1,11 @@
 #!/bin/bash
 xhost +
 
-export UID=$(id -u)
-export GID=$(id -g)
 docker run -it --privileged \
-    --user $UID:$GID \
+    --user ${USER} \
     -v ${PWD}:/px4-docker-tutorial:rw \
     -v ${PWD}/px4_tutorial_pkg:/px4_ws/src/px4_tutorial_pkg:rw \
+    -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro \
     -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
     --env="DISPLAY=$DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
